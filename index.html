@@ -29,7 +29,7 @@ body {
     border-radius: 15px;
 }
 
-h1 { color: #00ffcc; }
+h1, h2 { color: #00ffcc; }
 
 input {
     width: 90%;
@@ -44,7 +44,7 @@ button {
     background: #00ffcc;
     border: none;
     padding: 12px 20px;
-    font-size: 18px;
+    font-size: 16px;
     border-radius: 10px;
     cursor: pointer;
 }
@@ -65,13 +65,6 @@ th {
     color: black;
 }
 
-#total {
-    margin-top: 15px;
-    font-size: 20px;
-    color: #00ffcc;
-    font-weight: bold;
-}
-
 footer {
     margin-top: 20px;
     padding: 15px;
@@ -82,26 +75,16 @@ footer {
 </head>
 
 <body>
-<hr style="margin:30px 0; border:1px solid #444;">
-
-<h2>📐 MS Sheet Calculator (2ft × 3ft)</h2>
-
-<input type="number" id="msLength" placeholder="Slab Length (m)">
-<input type="number" id="msWidth" placeholder="Slab Width (m)">
-
-<button onclick="calculateMS()">Calculate MS Sheets</button>
-
-<p id="msResult" style="margin-top:15px; font-weight:bold; color:#00ffcc;"></p>
 
 <div class="container">
+
     <h1>🏗 Civil Props / Jacks Calculator</h1>
-    <p>1 Meter Grid Rule | Slab Centering Calculation</p>
 
     <input type="number" id="length" value="12" step="0.1" placeholder="Slab Length (m)">
     <input type="number" id="width" value="8" step="0.1" placeholder="Slab Width (m)">
     <input type="number" id="spacing" value="1" step="0.1" min="0.5" max="1.5" placeholder="Spacing (m)">
 
-    <button onclick="calculate()">Calculate Props 🔊</button>
+    <button onclick="calculate()">Calculate Props</button>
 
     <table>
         <thead>
@@ -115,6 +98,18 @@ footer {
     </table>
 
     <p id="total"></p>
+
+    <hr style="margin:30px 0; border:1px solid #444;">
+
+    <h2>📐 MS Sheet Calculator (2ft × 3ft)</h2>
+
+    <input type="number" id="msLength" placeholder="Slab Length (m)">
+    <input type="number" id="msWidth" placeholder="Slab Width (m)">
+
+    <button onclick="calculateMS()">Calculate MS Sheets</button>
+
+    <p id="msResult" style="margin-top:15px; font-weight:bold; color:#00ffcc;"></p>
+
 </div>
 
 <footer>
@@ -123,41 +118,10 @@ footer {
   <p>Version 1.0</p>
 </footer>
 
-<audio id="clickSound">
-    <source src="https://www.soundjay.com/buttons/sounds/button-16.mp3" type="audio/mpeg">
-</audio>
-
 <script>
-function calculate()function calculateMS() {
 
-    const L = parseFloat(document.getElementById("msLength").value);
-    const W = parseFloat(document.getElementById("msWidth").value);
-
-    if (!L || !W) {
-        alert("Enter slab dimensions");
-        return;
-    }
-
-    const slabArea = L * W;
-
-    // 2ft x 3ft sheet converted to meters
-    const sheetLength = 0.6096;  // 2ft in meters
-    const sheetWidth = 0.9144;   // 3ft in meters
-
-    const sheetArea = sheetLength * sheetWidth;
-
-    const sheetsRequired = Math.ceil(slabArea / sheetArea);
-    const sheetsWithWaste = Math.ceil(sheetsRequired * 1.05);
-
-    document.getElementById("msResult").innerHTML =
-        `Slab Area: ${slabArea.toFixed(2)} m² <br>
-         Single Sheet Area: ${sheetArea.toFixed(2)} m² <br>
-         Sheets Required: ${sheetsRequired} <br>
-         +5% Extra: ${sheetsWithWaste}`;
-}
- {
-    document.getElementById("clickSound").play();
-
+// Props Calculator
+function calculate() {
     const L = parseFloat(document.getElementById('length').value);
     const W = parseFloat(document.getElementById('width').value);
     const S = parseFloat(document.getElementById('spacing').value);
@@ -183,12 +147,39 @@ function calculate()function calculateMS() {
         `✅ You Need ${extra} Props/Jacks`;
 }
 
-// Service Worker Register
+// MS Sheet Calculator
+function calculateMS() {
+
+    const L = parseFloat(document.getElementById("msLength").value);
+    const W = parseFloat(document.getElementById("msWidth").value);
+
+    if (!L || !W) {
+        alert("Enter slab dimensions");
+        return;
+    }
+
+    const slabArea = L * W;
+
+    const sheetLength = 0.6096;  // 2ft in meters
+    const sheetWidth = 0.9144;   // 3ft in meters
+
+    const sheetArea = sheetLength * sheetWidth;
+
+    const sheetsRequired = Math.ceil(slabArea / sheetArea);
+    const sheetsWithWaste = Math.ceil(sheetsRequired * 1.05);
+
+    document.getElementById("msResult").innerHTML =
+        `Slab Area: ${slabArea.toFixed(2)} m² <br>
+         Single Sheet Area: ${sheetArea.toFixed(2)} m² <br>
+         Sheets Required: ${sheetsRequired} <br>
+         +5% Extra: ${sheetsWithWaste}`;
+}
+
+// Service Worker
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("service-worker.js");
 }
 
-calculate();
 </script>
 
 </body>
