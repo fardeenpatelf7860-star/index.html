@@ -1,30 +1,37 @@
-const CACHE_NAME = "props-calculator-v3";
+const CACHE_NAME = "civil-toolkit-v1";
 
 const urlsToCache = [
+  "./",
+  "index.html",
   "logo.png",
   "manifest.json"
 ];
 
-// Install
 self.addEventListener("install", event => {
   self.skipWaiting();
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(urlsToCache))
+  );
 });
 
-// Activate
 self.addEventListener("activate", event => {
   event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cache => caches.delete(cache))
-      );
-    })
+    caches.keys().then(cacheNames =>
+      Promise.all(
+        cacheNames.map(cache => {
+          if (cache !== CACHE_NAME) {
+            return caches.delete(cache);
+          }
+        })
+      )
+    )
   );
   self.clients.claim();
 });
 
-// Fetch (always get fresh HTML)
 self.addEventListener("fetch", event => {
-  if (event.request.mode === "navigate") {
-    event.respondWith(fetch(event.request));
-  }
+  event.respondWith(
+    fetch(event.request).catch(() => caches.match(event.request))
+  );
 });
