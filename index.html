@@ -9,7 +9,13 @@
 <title>Advanced Props & Jacks Calculator</title>
 
 <style>
-    body {
+   <script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js")
+    .then(() => console.log("Service Worker Registered"));
+}
+</script>
+ body {
      <footer style="margin-top:20px; padding:15px; text-align:center; font-size:14px; color:#ccc;">
   <hr style="border:1px solid #444;">
   <p>Designed by <strong>Fardeen Patel</strong> | Civil Engineer</p>
@@ -190,4 +196,5 @@ calculate();
 </body>
 
 </html>
+
 
