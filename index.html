@@ -84,82 +84,86 @@ footer {
 
     <h1>🏗 Civil Props / Jacks Calculator</h1>
 
-    <input type="number" id="length" value="12" step="0.1" placeholder="Slab Length (m)">
-    <input type="number" id="width" value="8" step="0.1" placeholder="Slab Width (m)">
-    <input type="number" id="spacing" value="1" step="0.1" min="0.5" max="1.5" placeholder="Spacing (m)">
+<label>
+  <input type="radio" name="mode" value="lb" checked onclick="toggleMode()"> Length × Width
+</label>
+<label style="margin-left:15px;">
+  <input type="radio" name="mode" value="area" onclick="toggleMode()"> Direct Area
+</label>
 
-    <button onclick="calculate()">Calculate Props</button>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Direction</th>
-                <th>Formula</th>
-                <th>Props</th>
-            </tr>
-        </thead>
-        <tbody id="resultBody"></tbody>
-    </table>
-
-    <p id="total"></p>
-
-    <hr style="margin:30px 0; border:1px solid #444;">
-
-    <h2>📐 MS Sheet Calculator (2ft × 3ft)</h2>
-
-    <input type="number" id="msLength" placeholder="Slab Length (m)">
-    <input type="number" id="msWidth" placeholder="Slab Width (m)">
-
-    <button onclick="calculateMS()">Calculate MS Sheets</button>
-
-    <p id="msResult" style="margin-top:15px; font-weight:bold; color:#00ffcc;"></p>
-<hr style="margin:30px 0; border:1px solid #444;">
-
-<h2>🏗 Slab Load Calculator</h2>
-
-<input type="number" id="thickness" placeholder="Slab Thickness (mm)">
-<input type="number" id="liveLoad" placeholder="Live Load (kN/m²)">
-
-<button onclick="calculateLoad()">Calculate Load</button>
-
-<p id="loadResult" style="margin-top:15px; font-weight:bold; color:#00ffcc;"></p>
-
+<div id="lbInputs">
+  <input type="number" id="length" step="0.1" placeholder="Slab Length (m)">
+  <input type="number" id="width" step="0.1" placeholder="Slab Width (m)">
 </div>
 
-<footer>
-  <hr style="border:1px solid #444;">
-  <p>Designed by <strong>Fardeen Patel</strong> | Civil Engineer</p>
-  <p>Version 1.0</p>
-</footer>
+<div id="areaInputs" style="display:none;">
+  <input type="number" id="area" step="0.1" placeholder="Total Area (m²)">
+</div>
+
+<input type="number" id="spacing" step="0.1" min="0.5" max="1.5" placeholder="Spacing (m)">
+
+<button onclick="calculate()">Calculate Props</button>
+
+<p id="total" style="margin-top:15px; font-weight:bold;"></p>
+
 
 <script>
 
-// Props Calculator
-function calculate() {
-    const L = parseFloat(document.getElementById('length').value);
-    const W = parseFloat(document.getElementById('width').value);
-    const S = parseFloat(document.getElementById('spacing').value);
+function toggleMode() {
+  const mode = document.querySelector('input[name="mode"]:checked').value;
 
-    if(!L || !W || !S) {
-        alert("Enter valid values");
-        return;
+  if (mode === "lb") {
+    document.getElementById("lbInputs").style.display = "block";
+    document.getElementById("areaInputs").style.display = "none";
+  } else {
+    document.getElementById("lbInputs").style.display = "none";
+    document.getElementById("areaInputs").style.display = "block";
+  }
+}
+
+
+function calculate() {
+  const spacing = parseFloat(document.getElementById("spacing").value);
+  const mode = document.querySelector('input[name="mode"]:checked').value;
+
+  if (!spacing) {
+    alert("Enter spacing");
+    return;
+  }
+
+  let totalProps = 0;
+
+  if (mode === "lb") {
+    const L = parseFloat(document.getElementById("length").value);
+    const W = parseFloat(document.getElementById("width").value);
+
+    if (!L || !W) {
+      alert("Enter length and width");
+      return;
     }
 
-    const propsL = Math.floor(L / S) + 1;
-    const propsW = Math.floor(W / S) + 1;
-    const total = propsL * propsW;
-    const extra = Math.ceil(total * 1.1);
+    const propsL = Math.floor(L / spacing) + 1;
+    const propsW = Math.floor(W / spacing) + 1;
 
-    document.getElementById('resultBody').innerHTML = `
-        <tr><td>Length</td><td>${L}/${S} +1</td><td>${propsL}</td></tr>
-        <tr><td>Width</td><td>${W}/${S} +1</td><td>${propsW}</td></tr>
-        <tr><td>Total</td><td>${propsL} × ${propsW}</td><td>${total}</td></tr>
-        <tr><td>+10% Extra</td><td>${total} × 1.1</td><td>${extra}</td></tr>
-    `;
+    totalProps = propsL * propsW;
 
-    document.getElementById('total').innerHTML =
-        `✅ You Need ${extra} Props/Jacks`;
+  } else {
+    const area = parseFloat(document.getElementById("area").value);
+
+    if (!area) {
+      alert("Enter total area");
+      return;
+    }
+
+    totalProps = Math.ceil(area / (spacing * spacing));
+  }
+
+  const finalProps = Math.ceil(totalProps * 1.1);
+
+  document.getElementById("total").innerHTML =
+    `Estimated Props Required: ${finalProps}`;
 }
+
 
 
 // MS Sheet Calculator
@@ -225,6 +229,7 @@ if ("serviceWorker" in navigator) {
 
 </body>
 </html>
+
 
 
 
