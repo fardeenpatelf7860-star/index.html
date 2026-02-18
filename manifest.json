@@ -1,7 +1,7 @@
 {
   "name": "Civil Props Calculator",
   "short_name": "PropsCalc",
-  "start_url": "./",
+  "start_url": "./",                
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#00ffcc",
@@ -13,3 +13,4 @@
     }
   ]
 }
+
