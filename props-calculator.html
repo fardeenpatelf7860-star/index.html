@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><link rel="icon" href="logo.png">
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#00ffcc">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advanced Props & Jacks Calculator</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+        url('https://images.unsplash.com/photo-1590650153855-d9e808231d41?auto=format&fit=crop&w=1600&q=80');
+        background-size: cover;
+        background-attachment: fixed;
+        color: white;
+        text-align: center;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 40px auto;
+        background: rgba(0,0,0,0.75);
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(255,255,255,0.2);
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    h1 {
+        margin-bottom: 10px;
+        color: #00ffcc;
+    }
+
+    input {
+        width: 90%;
+        padding: 10px;
+        margin: 8px 0;
+        border-radius: 8px;
+        border: none;
+        font-size: 16px;
+        text-align: center;
+    }
+
+    button {
+        background: #00ffcc;
+        border: none;
+        padding: 12px 20px;
+        font-size: 18px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.3s;
+        margin-top: 10px;
+    }
+
+    button:hover {
+        background: #00cc99;
+        transform: scale(1.05);
+    }
+
+    table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid #444;
+        padding: 10px;
+    }
+
+    th {
+        background: #00ffcc;
+        color: black;
+    }
+
+    #total {
+        margin-top: 15px;
+        font-size: 20px;
+        color: #00ffcc;
+        font-weight: bold;
+    }
+
+    @keyframes fadeIn {
+        from {opacity: 0;}
+        to {opacity: 1;}
+    }
+
+    /* Floating cement effect */
+    .cement {
+        position: fixed;
+        width: 15px;
+        height: 15px;
+        background: gray;
+        border-radius: 50%;
+        opacity: 0.5;
+        animation: fall 10s linear infinite;
+    }
+
+    @keyframes fall {
+        from {transform: translateY(-100px);}
+        to {transform: translateY(100vh);}
+    }
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>🏗 Civil Props / Jacks Calculator</h1>
+    <p>1 Meter Grid Rule | Slab Centering Calculation</p>
+
+    <input type="number" id="length" value="12" step="0.1" placeholder="Slab Length (m)">
+    <input type="number" id="width" value="8" step="0.1" placeholder="Slab Width (m)">
+    <input type="number" id="spacing" value="1" step="0.1" min="0.5" max="1.5" placeholder="Spacing (m)">
+
+    <button onclick="calculate()">Calculate Props 🔊</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Direction</th>
+                <th>Formula</th>
+                <th>Props</th>
+            </tr>
+        </thead>
+        <tbody id="resultBody"></tbody>
+    </table>
+
+    <p id="total"></p>
+</div>
+
+<audio id="clickSound">
+    <source src="https://www.soundjay.com/buttons/sounds/button-16.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+function calculate() {
+    document.getElementById("clickSound").play();
+
+    const L = parseFloat(document.getElementById('length').value);
+    const W = parseFloat(document.getElementById('width').value);
+    const S = parseFloat(document.getElementById('spacing').value);
+
+    if(!L || !W || !S) {
+        alert("Enter valid values bro 😅");
+        return;
+    }
+
+    const propsL = Math.floor(L / S) + 1;
+    const propsW = Math.floor(W / S) + 1;
+    const total = propsL * propsW;
+    const extra = Math.ceil(total * 1.1);
+
+    document.getElementById('resultBody').innerHTML = `
+        <tr><td>Length</td><td>${L}/${S} +1</td><td>${propsL}</td></tr>
+        <tr><td>Width</td><td>${W}/${S} +1</td><td>${propsW}</td></tr>
+        <tr><td>Total</td><td>${propsL} × ${propsW}</td><td>${total}</td></tr>
+        <tr><td>+10% Extra</td><td>${total} × 1.1</td><td>${extra}</td></tr>
+    `;
+
+    document.getElementById('total').innerHTML =
+        `✅ You Need <span style="color:#00ffcc">${extra}</span> Props/Jacks`;
+}
+
+// Cement floating animation
+for(let i=0;i<20;i++){
+    let cement = document.createElement("div");
+    cement.className="cement";
+    cement.style.left=Math.random()*100+"vw";
+    cement.style.animationDuration=(5+Math.random()*5)+"s";
+    cement.style.opacity=Math.random();
+    document.body.appendChild(cement);
+}
+
+calculate();
+
+</script>
+
+</body>
+</html>
