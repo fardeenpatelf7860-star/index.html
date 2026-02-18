@@ -82,6 +82,16 @@ footer {
 </head>
 
 <body>
+<hr style="margin:30px 0; border:1px solid #444;">
+
+<h2>📐 MS Sheet Calculator (2ft × 3ft)</h2>
+
+<input type="number" id="msLength" placeholder="Slab Length (m)">
+<input type="number" id="msWidth" placeholder="Slab Width (m)">
+
+<button onclick="calculateMS()">Calculate MS Sheets</button>
+
+<p id="msResult" style="margin-top:15px; font-weight:bold; color:#00ffcc;"></p>
 
 <div class="container">
     <h1>🏗 Civil Props / Jacks Calculator</h1>
@@ -118,7 +128,34 @@ footer {
 </audio>
 
 <script>
-function calculate() {
+function calculate()function calculateMS() {
+
+    const L = parseFloat(document.getElementById("msLength").value);
+    const W = parseFloat(document.getElementById("msWidth").value);
+
+    if (!L || !W) {
+        alert("Enter slab dimensions");
+        return;
+    }
+
+    const slabArea = L * W;
+
+    // 2ft x 3ft sheet converted to meters
+    const sheetLength = 0.6096;  // 2ft in meters
+    const sheetWidth = 0.9144;   // 3ft in meters
+
+    const sheetArea = sheetLength * sheetWidth;
+
+    const sheetsRequired = Math.ceil(slabArea / sheetArea);
+    const sheetsWithWaste = Math.ceil(sheetsRequired * 1.05);
+
+    document.getElementById("msResult").innerHTML =
+        `Slab Area: ${slabArea.toFixed(2)} m² <br>
+         Single Sheet Area: ${sheetArea.toFixed(2)} m² <br>
+         Sheets Required: ${sheetsRequired} <br>
+         +5% Extra: ${sheetsWithWaste}`;
+}
+ {
     document.getElementById("clickSound").play();
 
     const L = parseFloat(document.getElementById('length').value);
@@ -156,3 +193,4 @@ calculate();
 
 </body>
 </html>
+
