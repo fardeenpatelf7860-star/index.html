@@ -1,16 +1,11 @@
 {
-  "id": "/",
-  "name": "Civil Site Pro",
+  "name": "PropsCalc - Civil Engineering Calculator",
   "short_name": "PropsCalc",
-  "description": "Civil Engineering Calculator for Slab Props, Beam Props, MS Sheet, Load and Shuttering Calculation.",
   "start_url": "./",
-  "scope": "./",
   "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#141e30",
+  "background_color": "#0f172a",
   "theme_color": "#00ffcc",
-  "lang": "en",
-  "categories": ["productivity", "utilities", "business"],
+  "description": "Civil Engineering Calculator for Slab Props, Beam Props, MS Sheet, Load and Shuttering Calculation.",
   "icons": [
     {
       "src": "logo-192.png",
@@ -24,3 +19,5 @@
     }
   ]
 }
+
+
