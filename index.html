@@ -1,77 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Civil Engineering Toolkit - Fardeen Patel</title>
+<title>Civil Site Pro - Fardeen Patel</title>
 
 <link rel="icon" href="logo.png">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#00ffcc">
 
 <style>
-body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-    color: white;
-    text-align: center;
+body{
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(135deg,#141e30,#243b55);
+  color:white;
+  text-align:center;
 }
-
-.container {
-    max-width: 650px;
-    margin: 40px auto;
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(10px);
-    padding: 30px;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+.container{
+  max-width:700px;
+  margin:40px auto;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(10px);
+  padding:30px;
+  border-radius:20px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.5);
 }
-
-h1, h2 { color: #00ffcc; }
-
-input {
-    width: 92%;
-    padding: 12px;
-    margin: 8px 0;
-    border-radius: 8px;
-    border: none;
-    font-size: 14px;
-    text-align: center;
+h1{color:#00ffcc;margin-bottom:5px;}
+h2{
+  margin-top:35px;
+  border-bottom:1px solid rgba(255,255,255,0.2);
+  padding-bottom:5px;
+  color:#00ffcc;
 }
-
-button {
-    background: #00ffcc;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
+input{
+  width:92%;
+  padding:12px;
+  margin:8px 0;
+  border-radius:10px;
+  border:none;
+  font-size:14px;
+  text-align:center;
 }
-
-button:hover {
-    background: #00d4aa;
-    transform: scale(1.05);
+button{
+  background:#00ffcc;
+  border:none;
+  padding:12px 20px;
+  border-radius:10px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.3s;
 }
-
-p {
-    margin-top: 12px;
-    font-weight: bold;
-    color: #00ffcc;
+button:hover{
+  background:#00d4aa;
+  transform:scale(1.05);
 }
-
-hr {
-    margin: 25px 0;
-    border: 0;
-    height: 1px;
-    background: rgba(255,255,255,0.2);
+.result{
+  margin-top:10px;
+  font-weight:bold;
+  color:#00ffcc;
 }
-
-footer {
-    margin-top: 20px;
-    font-size: 13px;
-    color: #ccc;
+footer{
+  margin-top:20px;
+  font-size:13px;
+  color:#ccc;
+}
+hr{
+  margin:25px 0;
+  border:1px solid rgba(255,255,255,0.2);
 }
 </style>
 </head>
@@ -80,152 +76,107 @@ footer {
 
 <div class="container">
 
-<h1>🏗 Civil Engineering Toolkit</h1>
+<h1>🏗 Civil Site Pro</h1>
 <p>Designed by <strong>Fardeen Patel</strong></p>
 
-<label>
-  <input type="radio" name="mode" value="lb" checked onclick="toggleMode()"> Length × Width
-</label>
-<label style="margin-left:15px;">
-  <input type="radio" name="mode" value="area" onclick="toggleMode()"> Direct Area
-</label>
+<button onclick="shareApp()">📤 Share App</button>
 
-<div id="lbInputs">
-  <input type="number" id="length" placeholder="Length (m)">
-  <input type="number" id="width" placeholder="Width (m)">
-</div>
+<hr>
 
-<div id="areaInputs" style="display:none;">
-  <input type="number" id="area" placeholder="Total Area (m²)">
-</div>
-
+<h2>Slab Props Calculator</h2>
+<input type="number" id="area" placeholder="Area (m²)">
 <input type="number" id="spacing" placeholder="Spacing (m)">
-
-<button onclick="calculateProps()">Calculate Props</button>
-<p id="propsResult"></p>
-
-<hr>
-
-<h2>📐 MS Sheet Calculator (2ft × 3ft)</h2>
-
-<input type="number" id="msLength" placeholder="Slab Length (m)">
-<input type="number" id="msWidth" placeholder="Slab Width (m)">
-
-<button onclick="calculateMS()">Calculate Sheets</button>
-<p id="msResult"></p>
+<button onclick="calcProps()">Calculate</button>
+<p id="propsResult" class="result"></p>
 
 <hr>
 
-<h2>🏗 Slab Load Calculator</h2>
+<h2>MS Sheet Calculator (2ft × 3ft)</h2>
+<input type="number" id="slabL" placeholder="Length (m)">
+<input type="number" id="slabW" placeholder="Width (m)">
+<button onclick="calcMS()">Calculate</button>
+<p id="msResult" class="result"></p>
 
-<input type="number" id="thickness" placeholder="Thickness (mm)">
-<input type="number" id="liveLoad" placeholder="Live Load (kN/m²)">
+<hr>
 
-<button onclick="calculateLoad()">Calculate Load</button>
-<p id="loadResult"></p>
+<h2>Beam Shuttering Area (+5% Extra)</h2>
+<input type="number" id="beamL" placeholder="Beam Length (m)">
+<input type="number" id="beamW" placeholder="Beam Width (m)">
+<input type="number" id="beamD" placeholder="Beam Depth (m)">
+<button onclick="calcBeam()">Calculate</button>
+<p id="beamResult" class="result"></p>
+
+<hr>
+
+<h2>Slab Load Calculator (+5% Factor)</h2>
+<input type="number" id="thick" placeholder="Thickness (mm)">
+<input type="number" id="live" placeholder="Live Load (kN/m²)">
+<button onclick="calcLoad()">Calculate</button>
+<p id="loadResult" class="result"></p>
 
 </div>
 
 <footer>
-Version 1.0 | © Fardeen Patel
+Version 2.0 | © Fardeen Patel
 </footer>
 
 <script>
 
-function toggleMode() {
-  const mode = document.querySelector('input[name="mode"]:checked').value;
-  document.getElementById("lbInputs").style.display = (mode === "lb") ? "block" : "none";
-  document.getElementById("areaInputs").style.display = (mode === "area") ? "block" : "none";
+function calcProps(){
+ let A=parseFloat(area.value);
+ let S=parseFloat(spacing.value);
+ if(!A||!S)return alert("Enter values");
+ let total=Math.ceil(A/(S*S)); // NO EXTRA
+ propsResult.innerHTML="Required Props: "+total;
 }
 
-function calculateProps() {
-  const spacing = parseFloat(document.getElementById("spacing").value);
-  const mode = document.querySelector('input[name="mode"]:checked').value;
-
-  if (!spacing) {
-    alert("Enter spacing");
-    return;
-  }
-
-  let total = 0;
-
-  if (mode === "lb") {
-    const L = parseFloat(document.getElementById("length").value);
-    const W = parseFloat(document.getElementById("width").value);
-
-    if (!L || !W) {
-      alert("Enter length and width");
-      return;
-    }
-
-    const propsL = Math.floor(L / spacing) + 1;
-    const propsW = Math.floor(W / spacing) + 1;
-    total = propsL * propsW;
-
-  } else {
-    const area = parseFloat(document.getElementById("area").value);
-
-    if (!area) {
-      alert("Enter area");
-      return;
-    }
-
-    total = Math.ceil(area / (spacing * spacing));
-  }
-
-  const finalProps = Math.ceil(total * 1.1);
-  document.getElementById("propsResult").innerHTML =
-    `Estimated Props Required: ${finalProps}`;
+function calcMS(){
+ let L=parseFloat(slabL.value);
+ let W=parseFloat(slabW.value);
+ if(!L||!W)return alert("Enter values");
+ let slabArea=L*W;
+ let sheetArea=0.6096*0.9144;
+ let sheets=Math.ceil(slabArea/sheetArea); // NO EXTRA
+ msResult.innerHTML="MS Sheets Required: "+sheets;
 }
 
-function calculateMS() {
-  const L = parseFloat(document.getElementById("msLength").value);
-  const W = parseFloat(document.getElementById("msWidth").value);
-
-  if (!L || !W) {
-    alert("Enter slab dimensions");
-    return;
-  }
-
-  const slabArea = L * W;
-  const sheetArea = 0.6096 * 0.9144;
-
-  const sheets = Math.ceil(slabArea / sheetArea);
-  const sheetsWithWaste = Math.ceil(sheets * 1.05);
-
-  document.getElementById("msResult").innerHTML =
-    `Sheets Required: ${sheetsWithWaste}`;
+function calcBeam(){
+ let L=parseFloat(beamL.value);
+ let W=parseFloat(beamW.value);
+ let D=parseFloat(beamD.value);
+ if(!L||!W||!D)return alert("Enter values");
+ let area=(L*W)+(2*L*D);
+ let final=Math.ceil(area*1.05); // 5% extra
+ beamResult.innerHTML="Beam Shuttering Area: "+final+" m²";
 }
 
-function calculateLoad() {
-  const thickness = parseFloat(document.getElementById("thickness").value);
-  const liveLoad = parseFloat(document.getElementById("liveLoad").value);
-
-  if (!thickness || !liveLoad) {
-    alert("Enter thickness and live load");
-    return;
-  }
-
-  const selfWeight = (thickness / 1000) * 25;
-  const total = selfWeight + liveLoad;
-
-  document.getElementById("loadResult").innerHTML =
-    `Total Load: ${total.toFixed(2)} kN/m²`;
+function calcLoad(){
+ let t=parseFloat(thick.value)/1000;
+ let l=parseFloat(live.value);
+ if(!t||!l)return alert("Enter values");
+ let total=(t*25)+l;
+ let final=(total*1.05).toFixed(2); // 5% factor
+ loadResult.innerHTML="Total Load (with 5%): "+final+" kN/m²";
 }
 
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("service-worker.js");
+function shareApp(){
+ if(navigator.share){
+   navigator.share({
+     title:"Civil Site Pro",
+     text:"Check out this Civil Engineering Calculator App!",
+     url:window.location.href
+   });
+ }else{
+   navigator.clipboard.writeText(window.location.href);
+   alert("Link copied");
+ }
+}
+
+if("serviceWorker" in navigator){
+ navigator.serviceWorker.register("service-worker.js");
 }
 
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
