@@ -1,121 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><link rel="icon" href="logo.png">
-
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#00ffcc">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Advanced Props & Jacks Calculator</title>
 
+<link rel="icon" href="logo.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#00ffcc">
+
 <style>
-   <script>
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("service-worker.js")
-    .then(() => console.log("Service Worker Registered"));
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+    url('https://images.unsplash.com/photo-1590650153855-d9e808231d41?auto=format&fit=crop&w=1600&q=80');
+    background-size: cover;
+    background-attachment: fixed;
+    color: white;
+    text-align: center;
 }
-</script>
- body {
-     <footer style="margin-top:20px; padding:15px; text-align:center; font-size:14px; color:#ccc;">
-  <hr style="border:1px solid #444;">
-  <p>Designed by <strong>Fardeen Patel</strong> | Civil Engineer</p>
-  <p>Version 1.0</p>
-</footer>
-   margin: 0;
-        font-family: 'Segoe UI', sans-serif;
-        background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-        url('https://images.unsplash.com/photo-1590650153855-d9e808231d41?auto=format&fit=crop&w=1600&q=80');
-        background-size: cover;
-        background-attachment: fixed;
-        color: white;
-        text-align: center;
-    }
 
-    .container {
-        max-width: 600px;
-        margin: 40px auto;
-        background: rgba(0,0,0,0.75);
-        padding: 25px;
-        border-radius: 15px;
-        box-shadow: 0 0 20px rgba(255,255,255,0.2);
-        animation: fadeIn 1s ease-in-out;
-    }
+.container {
+    max-width: 600px;
+    margin: 40px auto;
+    background: rgba(0,0,0,0.75);
+    padding: 25px;
+    border-radius: 15px;
+}
 
-    h1 {
-        margin-bottom: 10px;
-        color: #00ffcc;
-    }
+h1 { color: #00ffcc; }
 
-    input {
-        width: 90%;
-        padding: 10px;
-        margin: 8px 0;
-        border-radius: 8px;
-        border: none;
-        font-size: 16px;
-        text-align: center;
-    }
+input {
+    width: 90%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 8px;
+    border: none;
+    text-align: center;
+}
 
-    button {
-        background: #00ffcc;
-        border: none;
-        padding: 12px 20px;
-        font-size: 18px;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: 0.3s;
-        margin-top: 10px;
-    }
+button {
+    background: #00ffcc;
+    border: none;
+    padding: 12px 20px;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+}
 
-    button:hover {
-        background: #00cc99;
-        transform: scale(1.05);
-    }
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
 
-    table {
-        width: 100%;
-        margin-top: 20px;
-        border-collapse: collapse;
-    }
+th, td {
+    border: 1px solid #444;
+    padding: 10px;
+}
 
-    th, td {
-        border: 1px solid #444;
-        padding: 10px;
-    }
+th {
+    background: #00ffcc;
+    color: black;
+}
 
-    th {
-        background: #00ffcc;
-        color: black;
-    }
+#total {
+    margin-top: 15px;
+    font-size: 20px;
+    color: #00ffcc;
+    font-weight: bold;
+}
 
-    #total {
-        margin-top: 15px;
-        font-size: 20px;
-        color: #00ffcc;
-        font-weight: bold;
-    }
-
-    @keyframes fadeIn {
-        from {opacity: 0;}
-        to {opacity: 1;}
-    }
-
-    /* Floating cement effect */
-    .cement {
-        position: fixed;
-        width: 15px;
-        height: 15px;
-        background: gray;
-        border-radius: 50%;
-        opacity: 0.5;
-        animation: fall 10s linear infinite;
-    }
-
-    @keyframes fall {
-        from {transform: translateY(-100px);}
-        to {transform: translateY(100vh);}
-    }
-
+footer {
+    margin-top: 20px;
+    padding: 15px;
+    font-size: 14px;
+    color: #ccc;
+}
 </style>
 </head>
 
@@ -145,12 +107,17 @@ if ("serviceWorker" in navigator) {
     <p id="total"></p>
 </div>
 
+<footer>
+  <hr style="border:1px solid #444;">
+  <p>Designed by <strong>Fardeen Patel</strong> | Civil Engineer</p>
+  <p>Version 1.0</p>
+</footer>
+
 <audio id="clickSound">
     <source src="https://www.soundjay.com/buttons/sounds/button-16.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-
 function calculate() {
     document.getElementById("clickSound").play();
 
@@ -159,7 +126,7 @@ function calculate() {
     const S = parseFloat(document.getElementById('spacing').value);
 
     if(!L || !W || !S) {
-        alert("Enter valid values bro 😅");
+        alert("Enter valid values");
         return;
     }
 
@@ -176,25 +143,16 @@ function calculate() {
     `;
 
     document.getElementById('total').innerHTML =
-        `✅ You Need <span style="color:#00ffcc">${extra}</span> Props/Jacks`;
+        `✅ You Need ${extra} Props/Jacks`;
 }
 
-// Cement floating animation
-for(let i=0;i<20;i++){
-    let cement = document.createElement("div");
-    cement.className="cement";
-    cement.style.left=Math.random()*100+"vw";
-    cement.style.animationDuration=(5+Math.random()*5)+"s";
-    cement.style.opacity=Math.random();
-    document.body.appendChild(cement);
+// Service Worker Register
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js");
 }
 
 calculate();
-
 </script>
 
 </body>
-
 </html>
-
-
