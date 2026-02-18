@@ -109,6 +109,16 @@ footer {
     <button onclick="calculateMS()">Calculate MS Sheets</button>
 
     <p id="msResult" style="margin-top:15px; font-weight:bold; color:#00ffcc;"></p>
+<hr style="margin:30px 0; border:1px solid #444;">
+
+<h2>🏗 Slab Load Calculator</h2>
+
+<input type="number" id="thickness" placeholder="Slab Thickness (mm)">
+<input type="number" id="liveLoad" placeholder="Live Load (kN/m²)">
+
+<button onclick="calculateLoad()">Calculate Load</button>
+
+<p id="loadResult" style="margin-top:15px; font-weight:bold; color:#00ffcc;"></p>
 
 </div>
 
@@ -147,6 +157,7 @@ function calculate() {
         `✅ You Need ${extra} Props/Jacks`;
 }
 
+
 // MS Sheet Calculator
 function calculateMS() {
 
@@ -175,13 +186,40 @@ function calculateMS() {
          +5% Extra: ${sheetsWithWaste}`;
 }
 
+
+// Slab Load Calculator
+function calculateLoad() {
+
+    const thicknessMM = parseFloat(document.getElementById("thickness").value);
+    const liveLoad = parseFloat(document.getElementById("liveLoad").value);
+
+    if (!thicknessMM || !liveLoad) {
+        alert("Enter thickness and live load");
+        return;
+    }
+
+    const thicknessM = thicknessMM / 1000;
+
+    const selfWeight = thicknessM * 25;
+
+    const totalLoad = selfWeight + liveLoad;
+
+    document.getElementById("loadResult").innerHTML =
+        `Self Weight: ${selfWeight.toFixed(2)} kN/m² <br>
+         Total Load: ${totalLoad.toFixed(2)} kN/m²`;
+}
+
+
 // Service Worker
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("service-worker.js");
 }
 
+
+
 </script>
 
 </body>
 </html>
+
 
