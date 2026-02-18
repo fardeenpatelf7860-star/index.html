@@ -3,11 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
-
-<title>Civil Engineering Toolkit</title>
+<title>Civil Engineering Toolkit - Fardeen Patel</title>
 
 <link rel="icon" href="logo.png">
 <link rel="manifest" href="manifest.json">
@@ -16,43 +12,66 @@
 <style>
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: #111;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
     color: white;
     text-align: center;
 }
 
 .container {
-    max-width: 600px;
+    max-width: 650px;
     margin: 40px auto;
-    background: #1e1e1e;
-    padding: 25px;
-    border-radius: 10px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
 }
 
 h1, h2 { color: #00ffcc; }
 
 input {
-    width: 90%;
-    padding: 10px;
+    width: 92%;
+    padding: 12px;
     margin: 8px 0;
-    border-radius: 6px;
+    border-radius: 8px;
     border: none;
+    font-size: 14px;
     text-align: center;
 }
 
 button {
     background: #00ffcc;
     border: none;
-    padding: 10px 18px;
-    border-radius: 6px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
     cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #00d4aa;
+    transform: scale(1.05);
+}
+
+p {
+    margin-top: 12px;
+    font-weight: bold;
+    color: #00ffcc;
+}
+
+hr {
+    margin: 25px 0;
+    border: 0;
+    height: 1px;
+    background: rgba(255,255,255,0.2);
 }
 
 footer {
     margin-top: 20px;
     font-size: 13px;
-    color: #aaa;
+    color: #ccc;
 }
 </style>
 </head>
@@ -61,7 +80,8 @@ footer {
 
 <div class="container">
 
-<h1>🏗 Civil Props Calculator</h1>
+<h1>🏗 Civil Engineering Toolkit</h1>
+<p>Designed by <strong>Fardeen Patel</strong></p>
 
 <label>
   <input type="radio" name="mode" value="lb" checked onclick="toggleMode()"> Length × Width
@@ -82,7 +102,6 @@ footer {
 <input type="number" id="spacing" placeholder="Spacing (m)">
 
 <button onclick="calculateProps()">Calculate Props</button>
-
 <p id="propsResult"></p>
 
 <hr>
@@ -93,7 +112,6 @@ footer {
 <input type="number" id="msWidth" placeholder="Slab Width (m)">
 
 <button onclick="calculateMS()">Calculate Sheets</button>
-
 <p id="msResult"></p>
 
 <hr>
@@ -104,13 +122,12 @@ footer {
 <input type="number" id="liveLoad" placeholder="Live Load (kN/m²)">
 
 <button onclick="calculateLoad()">Calculate Load</button>
-
 <p id="loadResult"></p>
 
 </div>
 
 <footer>
-Designed by <strong>Fardeen Patel</strong> | Version 1.0
+Version 1.0 | © Fardeen Patel
 </footer>
 
 <script>
@@ -204,6 +221,8 @@ if ("serviceWorker" in navigator) {
 
 </body>
 </html>
+
+
 
 
 
